@@ -1,0 +1,20 @@
+#--extra-index-url https://download.pytorch.org/whl/cu118
+deeplake==3.9.8
+langchain==0.2.1
+langchain-community==0.2.1
+langchain-core==0.2.2
+langchain-google-genai
+langsmith==0.1.63
+lxml==4.9.4
+nltk==3.8.1
+numpy==1.26.2
+pydantic==2.5.3
+pydantic_core==2.14.6
+PyMuPDF==1.23.21
+pypdf==3.17.4
+pypdfium2==4.25.0
+scipy==1.12.0
+sentence-transformers==2.3.1
+tiktoken==0.5.2
+transformers==4.36.2
+streamlit
