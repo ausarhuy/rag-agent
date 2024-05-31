@@ -1,9 +1,10 @@
 #--extra-index-url https://download.pytorch.org/whl/cu118
 deeplake==3.9.8
+python-dotenv==1.0.1
 langchain==0.2.1
 langchain-community==0.2.1
-langchain-core==0.2.2
-langchain-google-genai
+langchain-core==0.1.52
+langchain-google-genai==0.0.11
 langsmith==0.1.63
 lxml==4.9.4
 nltk==3.8.1
@@ -18,3 +19,4 @@ sentence-transformers==2.3.1
 tiktoken==0.5.2
 transformers==4.36.2
 streamlit
+jupyter

@@ -3,7 +3,6 @@ from langchain_google_genai import (
     GoogleGenerativeAIEmbeddings,
 )
 
-import src.config as cfg
 from src.pdf_reader import PDFReader
 
 
@@ -16,7 +15,7 @@ class Ingestion:
         self.text_retriever = None
         self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
-            google_api_key=cfg.GOOGLE_API_KEY,
+            task_type='retrieval_document',
         )
 
     def ingest_documents(

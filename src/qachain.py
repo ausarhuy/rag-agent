@@ -15,7 +15,6 @@ class QAChain:
         # Initialize Gemini Embeddings
         self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
-            google_api_key=cfg.GOOGLE_API_KEY,
             task_type="retrieval_query",
         )
 
@@ -23,7 +22,6 @@ class QAChain:
         self.model = ChatGoogleGenerativeAI(
             model="gemini-pro",
             temperature=0.3,
-            google_api_key=cfg.GOOGLE_API_KEY,
             convert_system_message_to_human=True,
         )
 
