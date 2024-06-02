@@ -1,28 +1,27 @@
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
-from langchain.vectorstores.deeplake import DeepLake
+from langchain_community.vectorstores.deeplake import DeepLake
 from langchain_google_genai import (
-    GoogleGenerativeAIEmbeddings,
     ChatGoogleGenerativeAI
 )
 
 import src.config as cfg
 from src.cache import CustomGPTCache
+from src.embeddings import GeminiEmbeddings
 
 
 class QAChain:
     def __init__(self):
         # Initialize Gemini Embeddings
-        self.embeddings = GoogleGenerativeAIEmbeddings(
+        self.embeddings = GeminiEmbeddings(
             model="models/embedding-001",
-            task_type="retrieval_query",
+            task_type="retrieval_query"
         )
 
         # Initialize Gemini Chat model
         self.model = ChatGoogleGenerativeAI(
             model="gemini-pro",
-            temperature=0.3,
-            convert_system_message_to_human=True,
+            temperature=0.3
         )
 
         # Initialize GPT Cache
@@ -85,7 +84,7 @@ class QAChain:
             llm=self.model,
             retriever=retriever,
             verbose=False,
-            chain_type_kwargs=chain_type_kwargs,
+            chain_type_kwargs=chain_type_kwargs
         )
 
         # Run the QA chain and store the response in cache

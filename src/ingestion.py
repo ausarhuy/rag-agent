@@ -1,8 +1,7 @@
 from langchain.vectorstores.deeplake import DeepLake
-from langchain_google_genai import (
-    GoogleGenerativeAIEmbeddings,
-)
 
+from src.embeddings import GeminiEmbeddings
+from src.utils import chunk_generator
 from src.pdf_reader import PDFReader
 
 
@@ -13,9 +12,20 @@ class Ingestion:
         self.text_vectorstore = None
         self.image_vectorstore = None
         self.text_retriever = None
-        self.embeddings = GoogleGenerativeAIEmbeddings(
+        self.embeddings = GeminiEmbeddings(
             model="models/embedding-001",
             task_type='retrieval_document',
+        )
+        self._initialize_text_vectorstore()
+
+    def _initialize_text_vectorstore(self):
+        # Initialize the vector store
+        self.text_vectorstore = DeepLake(
+            dataset_path="database/text_vectorstore",
+            embedding=self.embeddings,
+            overwrite=True,
+            num_workers=4,
+            verbose=False
         )
 
     def ingest_documents(
@@ -26,14 +36,7 @@ class Ingestion:
         loader = PDFReader()
         chunks = loader.load_pdf(file_path=file)
 
-        # Initialize the vector store
-        vstore = DeepLake(
-            dataset_path="database/text_vectorstore",
-            embedding=self.embeddings,
-            overwrite=True,
-            num_workers=4,
-            verbose=False,
-        )
-
-        # Ingest the chunks
-        _ = vstore.add_documents(chunks)
+        print(f"Attempt ingesting {len(chunks)} embedding vectors of {file}")
+        for chunk in chunk_generator(chunks):
+            # Ingest the chunks
+            _ = self.text_vectorstore.add_documents(chunk)

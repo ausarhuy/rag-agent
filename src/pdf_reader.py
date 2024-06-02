@@ -1,7 +1,7 @@
 import os
 
 from langchain.schema import Document
-from langchain_community.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import CharacterTextSplitter
 
 import src.config as cfg
@@ -10,7 +10,7 @@ import src.config as cfg
 class PDFReader:
     """Custom PDF Loader to embed metadata with the pdfs."""
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.file_name = ""
         self.total_pages = 0
 
@@ -18,8 +18,8 @@ class PDFReader:
         # Get the filename from file path
         self.file_name = os.path.basename(file_path)
 
-        # Initialize Langchain's PyPDFLoader to load the PDF pages
-        loader = PyPDFLoader(file_path)
+        # Initialize Langchain's PyMuPDFLoader to load the PDF pages
+        loader = PyMuPDFLoader(file_path)
 
         # Initialize the text splitter
         text_splitter = CharacterTextSplitter(
