@@ -20,7 +20,7 @@ class QAChain:
 
         # Initialize Gemini Chat model
         self.model = ChatGoogleGenerativeAI(
-            model="gemini-pro",
+            model="gemini-1.5-flash",
             temperature=0.3
         )
 

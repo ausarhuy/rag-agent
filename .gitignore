@@ -251,4 +251,5 @@ cython_debug/
 .idea/
 .vscode/
 database/
+deeplake/
 
