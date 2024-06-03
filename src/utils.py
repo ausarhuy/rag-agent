@@ -7,7 +7,7 @@ def chunk_generator(chunks, size=100):
 
     Args:
         chunks (list): The input list.
-        chunk_size (int, optional): Size of each chunk. Defaults to 100.
+        size (int, optional): Size of each chunk. Defaults to 100.
 
     Yields:
         generator: A chunk of the input chunks.

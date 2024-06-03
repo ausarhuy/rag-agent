@@ -1,6 +1,5 @@
 import os
-
-from langchain.schema import Document
+from langchain_core.documents import Document
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import CharacterTextSplitter
 
@@ -34,7 +33,7 @@ class PDFReader:
         chunks = []
 
         # Loop through the pages
-        for idx, page in enumerate(pages):
+        for idx, page in enumerate(pages, start=1):
             # Append each page as Document object with modified metadata
             chunks.append(
                 Document(
@@ -42,7 +41,7 @@ class PDFReader:
                     metadata=dict(
                         {
                             "file_name": self.file_name,
-                            "page_no": str(idx + 1),
+                            "page_no": str(idx),
                             "total_pages": str(self.total_pages),
                         }
                     ),

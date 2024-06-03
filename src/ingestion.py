@@ -1,4 +1,4 @@
-from langchain.vectorstores.deeplake import DeepLake
+from langchain_community.vectorstores.deeplake import DeepLake
 
 from src.embeddings import GeminiEmbeddings
 from src.utils import chunk_generator
@@ -36,7 +36,7 @@ class Ingestion:
         loader = PDFReader()
         chunks = loader.load_pdf(file_path=file)
 
-        print(f"Attempt ingesting {len(chunks)} embedding vectors of {file}")
+        print(f"Attempting to ingest {len(chunks)} embedding vectors from {file}")
         for chunk in chunk_generator(chunks):
             # Ingest the chunks
             _ = self.text_vectorstore.add_documents(chunk)

@@ -1,5 +1,5 @@
-from langchain.schema import Document
-from langchain.vectorstores.deeplake import DeepLake
+from langchain_core.documents import Document
+from langchain_community.vectorstores.deeplake import DeepLake
 
 from src.embeddings import GeminiEmbeddings
 
