@@ -28,10 +28,7 @@ class Ingestion:
             verbose=False
         )
 
-    def ingest_documents(
-            self,
-            file: str,
-    ):
+    def ingest_pdf(self, file: str):
         # Initialize the PDFReader and load the PDF as chunks
         loader = PDFReader()
         chunks = loader.load_pdf(file_path=file)
@@ -40,3 +37,6 @@ class Ingestion:
         for chunk in chunk_generator(chunks):
             # Ingest the chunks
             _ = self.text_vectorstore.add_documents(chunk)
+
+    def ingest_document(self, document: str):
+        pass
