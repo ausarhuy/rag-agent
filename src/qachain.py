@@ -66,7 +66,7 @@ class QAChain:
 
         # Write prompt to guide the LLM to generate response
         prompt_template = """
-        <YOUR PROMPT HERE>
+        Bạn là 1 hệ thống chatbot của trường đại học Tôn Đức Thắng, nhiệm vụ của bạn đó là trả lời các câu hỏi của người dùng dựa vào context bên dưới.
         Context: {context}
         Question: {question}
 

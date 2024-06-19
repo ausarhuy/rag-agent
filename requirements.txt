@@ -1,7 +1,13 @@
 #--extra-index-url https://download.pytorch.org/whl/cu118
 torch==2.2.2
 transformers==4.41.2
+datasets
+accelerate
 sentence-transformers==3.0.0
+ctransformers[cuda]
+# ctransformers
+chromadb
+langchain-chroma
 deeplake==3.9.8
 python-dotenv==1.0.1
 langchain==0.2.1
@@ -17,3 +23,4 @@ streamlit==1.35.0
 jupyter==1.0.0
 lxml
 PyMuPDF
+pyvi

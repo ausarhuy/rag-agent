@@ -251,5 +251,5 @@ cython_debug/
 .idea/
 .vscode/
 database/
-deeplake/
-
+chroma/
+models/
