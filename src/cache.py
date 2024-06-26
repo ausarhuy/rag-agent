@@ -1,13 +1,12 @@
 from langchain_core.documents import Document
 from langchain_community.vectorstores.deeplake import DeepLake
-
-from src.embeddings import GeminiEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
 
 class CustomGPTCache:
     def __init__(self):
         # Initialize the embeddings model and cache vector store
-        self.embeddings = GeminiEmbeddings(
+        self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
             task_type="retrieval_document"
         )

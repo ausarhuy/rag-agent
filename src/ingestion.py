@@ -1,7 +1,9 @@
-from langchain_community.vectorstores.deeplake import DeepLake
+import json
+
+from langchain_community.vectorstores import DeepLake
 from langchain_core.documents import Document
 
-from src.embeddings import GeminiEmbeddings, VietnameseEmbeddings
+from src.embeddings import VietnameseEmbeddings
 from src.pdf_reader import PDFReader
 from src.utils import chunk_generator
 
@@ -19,7 +21,7 @@ class Ingestion:
 
     def _initialize_text_vectorstore(self):
         # Initialize the vector store
-        self.text_vectorstore = Chroma(dataset_path="database/text_vectorstore", embedding=self.embeddings,
+        self.text_vectorstore = DeepLake(dataset_path="database/text_vectorstore", embedding=self.embeddings,
             overwrite=True, num_workers=4, verbose=False)
 
     def ingest_pdf(self, file: str):
@@ -32,8 +34,8 @@ class Ingestion:
             # Ingest the chunks
             _ = self.text_vectorstore.add_documents(chunk)
 
-    def ingest_document(self, document: str):
-        with open(document, "r") as f:
+    def ingest_json(self, json_file: str):
+        with open(json_file, "r") as f:
             data = json.load(f)
 
         chunks = []
@@ -43,9 +45,4 @@ class Ingestion:
             chunks.append(chunk)
             # Ingest the chunks
 
-        if self.model_name=="models/vietnamese-embeddings":
-            _ = self.text_vectorstore.add_documents(chunks)
-        else:
-            # Gemini embeddings
-            for chunk in chunk_generator(chunks):
-                _ = self.text_vectorstore.add_documents(chunk)
+        _ = self.text_vectorstore.add_documents(chunks)

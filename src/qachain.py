@@ -2,7 +2,7 @@ from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_community.vectorstores.deeplake import DeepLake
 from langchain_google_genai import (
-    ChatGoogleGenerativeAI
+    ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 )
 
 import src.config as cfg
@@ -13,7 +13,7 @@ from src.embeddings import GeminiEmbeddings
 class QAChain:
     def __init__(self):
         # Initialize Gemini Embeddings
-        self.embeddings = GeminiEmbeddings(
+        self.embeddings = GoogleGenerativeAIEmbeddings(
             model="models/embedding-001",
             task_type="retrieval_query"
         )
