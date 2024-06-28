@@ -1,0 +1,12 @@
+Chương III. ĐÁNH GIÁ KẾT QUẢ HỌC TẬP
+Điều 26. Đánh giá kết quả học tập
+Xếp loại học lực: Sinh viên được xếp loại học lực căn cứ vào điểm trung bình học kỳ, điểm trung bình tích lũy, theo quy định xếp loại ở Bảng 3. Trường hợp xếp loại học lực nhằm mục đích khen thưởng được thực hiện theo các quy định khen thưởng của Trường.
+| STT | Xếp loại học lực | Thang điểm hệ 10 (điểm ĐTBHK, ĐTBNH, ĐTBTL) |
+|---|---|---| 
+| 1 | Xuất sắc | Từ 9,00 đến 10,00 |
+| 2 | Giỏi | Từ 8,00 đến cận 9,00 |
+| 3 | Khá | Từ 7,00 đến cận 8,00 |
+| 4 | Trung bình khá | Từ 6,00 đến cận 7,00 |
+| 5 | Trung bình | Từ 5,00 đến cận 6,00 |
+| 6 | Yếu | Từ 4,00 đến cận 5,00 |
+| 7 | Kém | Dưới 4,00 |

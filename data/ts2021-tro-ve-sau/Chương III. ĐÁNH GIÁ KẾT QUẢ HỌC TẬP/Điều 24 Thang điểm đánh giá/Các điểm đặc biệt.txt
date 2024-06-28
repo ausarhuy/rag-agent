@@ -1,0 +1,11 @@
+Chương III. ĐÁNH GIÁ KẾT QUẢ HỌC TẬP
+Điều 24. Thang điểm đánh giá
+Các điểm đặc biệt: Một số trường hợp đặc biệt sử dụng các điểm chữ để ghi nhận theo các tình huống học vụ quy định tại Bảng 2.
+| Tên các điểm đặc biệt | Điểm chữ | Ghi chú về tính điểm và tích lũy | 
+|---|---|---| 
+| Không đủ điều kiện dự thi | F | Tính như điểm 0 (Xem khoản 1 Điều 25) | 
+| Vắng thi không phép | V | Tính như điểm 0 | 
+| Vắng thi có phép | H | Tính chưa tích lũy. Không tính vào ĐTBHK, ĐTBTL (Xem khoản 2 Điều 25) | 
+| Điểm miễn | M | Điểm đạt môn học. Tính vào tín chỉ tích lũy. Không tính vào ĐTBHK, ĐTBTL (Xem khoản 3 Điều 25) | 
+| Rút môn học | R | Tính chưa tích lũy. Không tính vào ĐTBHK, ĐTBTL (Xem khoản 4 Điều 25) | 
+| Điểm chưa hoàn tất | P, K | Tính chưa tích lũy. Không tính vào ĐTBHK, ĐTBTL. (xem khoản 5 Điều 25) |

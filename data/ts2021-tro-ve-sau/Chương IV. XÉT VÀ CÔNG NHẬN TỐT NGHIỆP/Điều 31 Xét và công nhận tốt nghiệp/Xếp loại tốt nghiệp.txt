@@ -1,0 +1,10 @@
+Chương IV. XÉT VÀ CÔNG NHẬN TỐT NGHIỆP
+Điều 31. Xét và công nhận tốt nghiệp
+Xếp loại tốt nghiệp: Việc xếp loại thứ hạng tốt nghiệp được tính theo Điểm trung bình tích lũy toàn khóa quy định tại Điều 27 theo Bảng 4.
+| STT | Xếp loại tốt nghiệp | Điểm trung bình tích lũy toàn khóa |
+|---|---|---| 
+| 1 | Xuất sắc | Từ 9,00 đến 10,00 |
+| 2 | Giỏi | Từ 8,00 đến cận 9,00 |
+| 3 | Khá | Từ 7,00 đến cận 8,00 |
+| 4 | Trung bình khá | Từ 6,00 đến cận 7,00 |
+| 5 | Trung bình | Từ 5,00 đến cận 6,00 |
