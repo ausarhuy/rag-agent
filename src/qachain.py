@@ -7,15 +7,15 @@ from langchain_google_genai import (
 
 import src.config as cfg
 from src.cache import CustomGPTCache
-from src.embeddings import GeminiEmbeddings
+from src.embeddings import VietnameseEmbeddings
 
 
 class QAChain:
     def __init__(self):
         # Initialize Gemini Embeddings
-        self.embeddings = GoogleGenerativeAIEmbeddings(
-            model="models/embedding-001",
-            task_type="retrieval_query"
+        self.embeddings = VietnameseEmbeddings(
+            model_name="dangvantuan/vietnamese-embedding",
+            model_kwargs={'device': 'cpu'}
         )
 
         # Initialize Gemini Chat model
