@@ -22,3 +22,4 @@ jupyter==1.0.0
 lxml
 PyMuPDF
 pyvi
+rank_bm25

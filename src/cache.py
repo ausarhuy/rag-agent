@@ -1,18 +1,15 @@
-from langchain_core.documents import Document
 from langchain_community.vectorstores.deeplake import DeepLake
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_core.documents import Document
+
+from src.embeddings import embedding
 
 
-class CustomGPTCache:
+class QueryCache:
     def __init__(self):
         # Initialize the embeddings model and cache vector store
-        self.embeddings = GoogleGenerativeAIEmbeddings(
-            model="models/embedding-001",
-            task_type="retrieval_document"
-        )
         self.response_cache_store = DeepLake(
             dataset_path="database/cache_vectorstore",
-            embedding=self.embeddings,
+            embedding=embedding,
             read_only=False,
             num_workers=4,
             verbose=False

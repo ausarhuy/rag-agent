@@ -1,7 +1,8 @@
 import os
+
 from langchain_core.documents import Document
 from langchain_community.document_loaders import PyMuPDFLoader
-from langchain_text_splitters import CharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 import src.config as cfg
 
@@ -21,10 +22,10 @@ class PDFReader:
         loader = PyMuPDFLoader(file_path)
 
         # Initialize the text splitter
-        text_splitter = CharacterTextSplitter(
+        text_splitter = RecursiveCharacterTextSplitter(
             separator="\n",
-            chunk_size=cfg.PDF_CHARSPLITTER_CHUNKSIZE,
-            chunk_overlap=cfg.PDF_CHARSPLITTER_CHUNK_OVERLAP,
+            chunk_size=cfg.CHUNK_SIZE,
+            chunk_overlap=cfg.CHUNK_OVERLAP,
         )
 
         # Load the pages from the document
@@ -49,5 +50,5 @@ class PDFReader:
             )
 
         # Split the documents using splitter
-        final_chunks = text_splitter.split_documents(chunks)
-        return final_chunks
+        documents = text_splitter.split_documents(chunks)
+        return documents

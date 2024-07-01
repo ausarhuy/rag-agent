@@ -1,9 +1,13 @@
+from functools import lru_cache
+import torch
 from typing import List
 
 from langchain_huggingface import HuggingFaceEmbeddings
 from pyvi.ViTokenizer import tokenize
 
 import sentence_transformers
+
+from src.config import EMBEDDING_MODEL
 
 
 class VietnameseEmbeddings(HuggingFaceEmbeddings):
@@ -30,3 +34,11 @@ class VietnameseEmbeddings(HuggingFaceEmbeddings):
 
         return embeddings.tolist()
 
+
+@lru_cache()
+def get_embedding_model():
+    return VietnameseEmbeddings(model_name=EMBEDDING_MODEL,
+                                model_kwargs={'device': 'cuda' if torch.cuda.is_available() else 'cpu'})
+
+
+embedding = get_embedding_model()
