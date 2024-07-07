@@ -1,28 +1,21 @@
-import json
-import os
-
-from langchain_community.vectorstores import DeepLake
-from langchain_core.documents import Document
-
-from src.embeddings import VietnameseEmbeddings
+from langchain.retrievers import ParentDocumentRetriever
+from langchain_chroma import Chroma
+from langchain_community.document_loaders import TextLoader, DirectoryLoader
+from langchain_core.stores import InMemoryByteStore
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from src.config import CHUNK_SIZE, CHUNK_OVERLAP, COLLECTION_NAME
+from src.embeddings import embedding_function
 from src.pdf_reader import PDFReader
 
 
 class Ingestion:
     """Ingestion class for ingesting documents to vectorstore."""
 
-    def __init__(self, model_name="models/vietnamese-embedding", model_kwargs={'device': 'cpu'}):
-        self.text_vectorstore = None
-        self.image_vectorstore = None
+    def __init__(self):
+        self.text_vectorstore = Chroma(collection_name=COLLECTION_NAME,
+                                       embedding_function=embedding_function,
+                                       persist_directory="./chromadb")
         self.text_retriever = None
-        #self.embeddings = GeminiEmbeddings(model="models/text-multilingual-embedding-002")
-        self.embeddings = VietnameseEmbeddings(model_name=model_name, model_kwargs=model_kwargs)
-        self._initialize_text_vectorstore()
-
-    def _initialize_text_vectorstore(self):
-        # Initialize the vector store
-        self.text_vectorstore = DeepLake(dataset_path="database/text_vectorstore", embedding=self.embeddings,
-            overwrite=True, num_workers=4, verbose=False)
 
     def ingest_pdf(self, file: str):
         # Initialize the PDFReader and load the PDF as chunks
@@ -31,14 +24,18 @@ class Ingestion:
         print(f"Attempting to ingest {len(documents)} embedding vectors from {file}")
         _ = self.text_vectorstore.add_documents(documents)
 
-        # for chunk in chunk_generator(chunks):
-        #     # Ingest the chunks
-        #     _ = self.text_vectorstore.add_documents(chunk)
+    def ingest_documents(self, data: str):
+        loader = DirectoryLoader(data, glob="**/*.txt", loader_cls=TextLoader, show_progress=True)
+        docs = loader.load()
 
-    def ingest_json(self, json_file: str):
-        with open(json_file, "r") as f:
-            data = json.load(f)
+        store = InMemoryByteStore()
 
-        # print(f"Attempting to ingest {len(documents)} embedding vectors from {json_file}")
-        #
-        # _ = self.text_vectorstore.add_documents(documents)
+        child_text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
+
+        retriever = ParentDocumentRetriever(
+            vectorstore=self.text_vectorstore,
+            docstore=store,
+            child_splitter=child_text_splitter,
+        )
+
+        retriever.add_documents(docs)

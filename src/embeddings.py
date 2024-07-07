@@ -41,4 +41,4 @@ def get_embedding_model():
                                 model_kwargs={'device': 'cuda' if torch.cuda.is_available() else 'cpu'})
 
 
-embedding = get_embedding_model()
+embedding_function = get_embedding_model()

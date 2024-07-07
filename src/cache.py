@@ -1,18 +1,15 @@
-from langchain_community.vectorstores.deeplake import DeepLake
+from langchain_chroma.vectorstores import Chroma
 from langchain_core.documents import Document
 
-from src.embeddings import embedding
+from src.embeddings import embedding_function
 
 
 class QueryCache:
     def __init__(self):
         # Initialize the embeddings model and cache vector store
-        self.response_cache_store = DeepLake(
-            dataset_path="database/cache_vectorstore",
-            embedding=embedding,
-            read_only=False,
-            num_workers=4,
-            verbose=False
+        self.response_cache_store = Chroma(
+            collection_name="caching",
+            embedding_function=embedding_function,
         )
 
     def cache_query_response(self, query: str, response: str):
