@@ -7,15 +7,18 @@ import streamlit as st
 from langchain.chains import create_history_aware_retriever  # To create the retriever chain (predefined chain)
 from langchain.chains import create_retrieval_chain  # To create the main chain (predefined chain)
 from langchain.chains.combine_documents import create_stuff_documents_chain  # To create a predefined chain
-from langchain.retrievers import EnsembleRetriever
+from langchain.retrievers import EnsembleRetriever, ParentDocumentRetriever
+from langchain.storage import LocalFileStore, create_kv_docstore
 from langchain_chroma import Chroma
-from langchain_community.chat_message_histories import ChatMessageHistory, SQLChatMessageHistory, StreamlitChatMessageHistory
+from langchain_community.chat_message_histories import ChatMessageHistory, SQLChatMessageHistory, \
+    StreamlitChatMessageHistory
 from langchain_community.llms import CTransformers
 from langchain_community.retrievers import BM25Retriever
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pyvi.ViTokenizer import tokenize
 
 from src.config import *
@@ -70,8 +73,18 @@ def instanciate_ai_assistant_chain(model, temperature):
 
     # Instanciate the retrievers
 
-    vector_retriever = vector_db.as_retriever(search_type="similarity", search_kwargs={"k": VECTORDB_MAX_RESULTS})
+    #vector_retriever = vector_db.as_retriever(search_type="similarity", search_kwargs={"k": VECTORDB_MAX_RESULTS})
+    fs = LocalFileStore("./docstore")
+    docstore = create_kv_docstore(fs)
 
+    child_text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
+
+    vector_retriever = ParentDocumentRetriever(
+        vectorstore=Chroma(embedding_function=embedding_function,
+                           collection_name=COLLECTION_NAME,
+                           persist_directory="./chromadb"),
+        docstore=docstore, child_splitter=child_text_splitter)
+    vector_retriever.search_kwargs["k"] = VECTORDB_MAX_RESULTS
     keyword_retriever = BM25Retriever.from_texts(documents, preprocess_func=tokenize)
     keyword_retriever.k = BM25_MAX_RESULTS
 
