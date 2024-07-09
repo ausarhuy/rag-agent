@@ -10,7 +10,8 @@ import streamlit as st
 from langchain.memory import ConversationBufferWindowMemory
 
 from src.config import *
-from src.utils import delete_directory, load_documents
+from src.ingestion import ingestion
+from src.utils import delete_directory
 
 
 def reset_conversation():
@@ -97,7 +98,7 @@ def admin_frontend():
             st.caption('Caution: Works only with files and DB running locally (server on which the app is running).')
 
             if st.button("Start Data Embed (locally only)"):
-                load_documents(path="data")
+                ingestion.ingest_json(file="data/extracted_data.json")
                 clear_memory_and_cache()
                 st.write("Done!")
 

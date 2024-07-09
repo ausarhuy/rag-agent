@@ -4,14 +4,14 @@ all the Langchain chains for RAG and LLM.
 """
 
 import streamlit as st
-from langchain.chains import create_history_aware_retriever  # To create the retriever chain (predefined chain)
-from langchain.chains import create_retrieval_chain  # To create the main chain (predefined chain)
 from langchain.chains.combine_documents import create_stuff_documents_chain  # To create a predefined chain
+from langchain.chains.history_aware_retriever import \
+    create_history_aware_retriever  # To create the retriever chain (predefined chain)
+from langchain.chains.retrieval import create_retrieval_chain  # To create the main chain (predefined chain)
 from langchain.retrievers import EnsembleRetriever, ParentDocumentRetriever
 from langchain.storage import LocalFileStore, create_kv_docstore
 from langchain_chroma import Chroma
-from langchain_community.chat_message_histories import ChatMessageHistory, SQLChatMessageHistory, \
-    StreamlitChatMessageHistory
+from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_community.llms import CTransformers
 from langchain_community.retrievers import BM25Retriever
 from langchain_core.chat_history import BaseChatMessageHistory
@@ -27,6 +27,7 @@ from src.embeddings import embedding_function
 store = {}
 
 
+@st.cache_resource
 def get_session_history(session_id: str) -> BaseChatMessageHistory:
     if session_id not in store:
         store[session_id] = ChatMessageHistory()
@@ -67,13 +68,15 @@ def instanciate_ai_assistant_chain(model, temperature):
         docs = vector_db.get()
         documents = docs["documents"]
 
+        if not documents:
+            st.write("Error: No documents in database!")
+
     except Exception as e:
         st.write("Error: Cannot instanciate the vector database!")
         st.write(f"Error: {e}")
 
     # Instanciate the retrievers
 
-    #vector_retriever = vector_db.as_retriever(search_type="similarity", search_kwargs={"k": VECTORDB_MAX_RESULTS})
     fs = LocalFileStore("./docstore")
     docstore = create_kv_docstore(fs)
 
@@ -84,6 +87,8 @@ def instanciate_ai_assistant_chain(model, temperature):
                            collection_name=COLLECTION_NAME,
                            persist_directory="./chromadb"),
         docstore=docstore, child_splitter=child_text_splitter)
+
+    vector_retriever.search_type = "similarity"
     vector_retriever.search_kwargs["k"] = VECTORDB_MAX_RESULTS
     keyword_retriever = BM25Retriever.from_texts(documents, preprocess_func=tokenize)
     keyword_retriever.k = BM25_MAX_RESULTS
@@ -112,8 +117,7 @@ def instanciate_ai_assistant_chain(model, temperature):
 
         rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
 
-        ai_assistant_chain = RunnableWithMessageHistory(rag_chain, get_session_history,
-                                                        input_messages_key="input",
+        ai_assistant_chain = RunnableWithMessageHistory(rag_chain, get_session_history, input_messages_key="input",
                                                         history_messages_key="chat_history",
                                                         output_messages_key="answer")
 

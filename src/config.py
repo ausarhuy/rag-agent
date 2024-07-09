@@ -28,8 +28,7 @@ DEFAULT_MENU_CHOICE = 0
 DEFAULT_TEMPERATURE = 0.2
 
 COLLECTION_NAME = "tdtu"  # Name of the collection in the vector DB
-# SQLite utils
-CONNECTION_STRING = "data.sql"
+DOCSTORE_PATH = "./docstore"
 
 VECTORDB_MAX_RESULTS = 10
 BM25_MAX_RESULTS = 10
@@ -77,13 +76,11 @@ ABOUT_TEXT = """
 ### Về chatbot
 
 
-#### Examples of questions you can ask
+#### Một số câu hỏi
 
-- When did King Leopold I die? Do you have any images of the funeral?
-- Do you have any images of Queen Elizabeth during the First World War?
-- Can you show me the canvas "The school review"? *And then you can ask the question:*
-- Who painted this canvas? *And then again:*
-- What is the size of the canvas? *And then again:*
+- Điểm M là gì?
+- Làm sao để nghỉ học tạm thời?
+- Học bổng tại trường?
 
 """
 

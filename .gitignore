@@ -10,3 +10,7 @@ docstore/
 serviceaccount*.json
 nohup.out
 models/
+.venv/
+.env/
+venv/
+env/

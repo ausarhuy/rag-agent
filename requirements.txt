@@ -13,12 +13,10 @@ langchain-community
 langchain_huggingface
 langchain-google-genai
 langchain-chroma
-langchain_rag
 chromadb~=0.5.3
 rank-bm25
 streamlit~=1.35.0
 PyMuPDF
-pysqlite3-binary
 beautifulsoup4~=4.12.3
 sentence_transformers
 requests~=2.32.3
