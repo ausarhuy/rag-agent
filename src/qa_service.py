@@ -52,10 +52,10 @@ def instanciate_ai_assistant_chain(model, temperature):
     # Instanciate the ChromaDB
 
     try:
-        vector_db = Chroma(embedding_function=embedding_function, collection_name=COLLECTION_NAME,
+        vectorstore = Chroma(embedding_function=embedding_function, collection_name=COLLECTION_NAME,
                            persist_directory="./chromadb")
 
-        docs = vector_db.get()
+        docs = vectorstore.get()
         documents = docs["documents"]
         metadata = docs["metadatas"]
 
@@ -71,9 +71,7 @@ def instanciate_ai_assistant_chain(model, temperature):
     child_text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
 
     vector_retriever = ParentDocumentRetriever(
-        vectorstore=Chroma(embedding_function=embedding_function,
-                           collection_name=COLLECTION_NAME,
-                           persist_directory="./chromadb"),
+        vectorstore=vectorstore,
         docstore=docstore, child_splitter=child_text_splitter)
 
     vector_retriever.search_type = "similarity"

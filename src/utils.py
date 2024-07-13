@@ -1,6 +1,7 @@
 """
 Miscellaneous functions, including function to chunk and embed files.
 """
+
 import shutil
 from itertools import islice
 import streamlit as st

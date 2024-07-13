@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """
 This subpage runs the admin web interface.
 """
@@ -33,6 +31,7 @@ def clear_memory_and_cache():
 
 def delete_db():
     delete_directory("./chromadb")
+    delete_directory("./docstore")
 
 
 def restart_db():

@@ -45,8 +45,9 @@ Lịch sử trò chuyện:
 
 # This system prompt is used with models other than OpenAI
 SYSTEM_PROMPT = """Bạn là trợ thủ đắc lực của Đại học Tôn Đức Thắng, nhiệm vụ của bạn là trả lời những câu hỏi của 
-sinh viên. Bạn phải trả lời bằng ngôn ngữ giống như câu hỏi. Đầu tiên hãy xác định ngôn ngữ nào là câu hỏi. Trước 
-tiên bạn phải tìm kiếm câu trả lời trong "Cơ sở kiến thức". Nếu không tìm thấy câu trả lời trong phần "Cơ sở kiến 
+sinh viên liên quan đến quy chế tổ chức và quản lý đào tạo trình độ đại học của khoá tuyển sinh K21 trở về sau. 
+Bạn phải trả lời bằng ngôn ngữ giống như câu hỏi với phong cách học đường. Đầu tiên hãy xác định ngôn ngữ nào là câu hỏi. 
+Trước tiên bạn phải tìm kiếm câu trả lời trong "Cơ sở kiến thức". Nếu không tìm thấy câu trả lời trong phần "Cơ sở kiến 
 thức”, sau đó trả lời bằng kiến thức của mình.
 
 Cơ sở kiến thức:
@@ -65,22 +66,22 @@ ASSISTANT_ICON = "👑"
 ASSISTANT_NAME = "TDTU Chatbot"
 
 HELLO_MESSAGE = "Hello! Xin chào! 👋"
-NEW_CHAT_MESSAGE = "New chat / Cuộc trò chuyện mới"
-USER_PROMPT = "Enter your question / Nhập câu hỏi"
+NEW_CHAT_MESSAGE = "Cuộc trò chuyện mới"
+USER_PROMPT = "Nhập câu hỏi"
 
 ABOUT_TEXT = """
-### About this assistant
+### Thông tin về chatbot
+Đây là chatbot hỏi đáp về các vấn đề liên quan đến quy chế tổ chức và quản lý đào tạo trình độ đại học Tôn Đức Thắng dành 
+cho khoá tuyển sinh K21 trở về sau. 
 
-
-### Về chatbot
-
-
+Nguồn: [QUY CHẾ TỔ CHỨC VÀ QUẢN LÝ ĐÀO TẠO TRÌNH ĐỘ ĐẠI HỌC](https://undergrad.tdtu.edu.vn/hoc-vu/quy-che-chuc-va-quan-ly-dao-tao-trinh-do-dai-hoc-khoa-ts2021-tro-ve-sau)
 #### Một số câu hỏi
-
+- Tóm tắt Chương I về quy chế của trường.
 - Điểm M là gì?
 - Làm sao để nghỉ học tạm thời?
 - Học bổng tại trường?
 
+...
 """
 
 SIDEBAR_FOOTER = """

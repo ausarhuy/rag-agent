@@ -1,6 +1,7 @@
 """
 Ingestion class for ingesting documents to vectorstore.
 """
+
 from typing import List
 
 from langchain.retrievers import ParentDocumentRetriever
