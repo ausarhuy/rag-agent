@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 This function runs the frontend web interface.
 """
@@ -8,14 +7,16 @@ import streamlit as st
 from langchain.memory import ConversationBufferWindowMemory
 
 from src.config import *
-from src.service import instanciate_ai_assistant_chain
+from src.qa_service import instanciate_ai_assistant_chain
+from src.utils import remove_chat_session
 
 
 # Function defined in two files: should be moved in a module
 def reset_conversation():
     """
-    Reset the conversation: clear the chat history and clear the screen.
+    Reset the conversation: clear the chat history/session and clear the screen.
     """
+    remove_chat_session(st.session_state.session_id)
     st.session_state.session_id = uuid.uuid4()
     st.session_state.messages = []
     st.session_state.chat_history = []

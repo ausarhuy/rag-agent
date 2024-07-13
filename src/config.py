@@ -1,5 +1,4 @@
 # Text processing config
-CACHE_THRESHOLD = 0.7
 CHUNK_SIZE = 450
 CHUNK_OVERLAP = 50
 

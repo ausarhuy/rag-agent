@@ -11,10 +11,8 @@ from langchain.chains.retrieval import create_retrieval_chain  # To create the m
 from langchain.retrievers import EnsembleRetriever, ParentDocumentRetriever
 from langchain.storage import LocalFileStore, create_kv_docstore
 from langchain_chroma import Chroma
-from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_community.llms import CTransformers
 from langchain_community.retrievers import BM25Retriever
-from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -23,15 +21,7 @@ from pyvi.ViTokenizer import tokenize
 
 from src.config import *
 from src.embeddings import embedding_function
-
-store = {}
-
-
-@st.cache_resource
-def get_session_history(session_id: str) -> BaseChatMessageHistory:
-    if session_id not in store:
-        store[session_id] = ChatMessageHistory()
-    return store[session_id]
+from src.utils import get_session_history
 
 
 @st.cache_resource
@@ -67,9 +57,7 @@ def instanciate_ai_assistant_chain(model, temperature):
 
         docs = vector_db.get()
         documents = docs["documents"]
-
-        if not documents:
-            st.write("Error: No documents in database!")
+        metadata = docs["metadatas"]
 
     except Exception as e:
         st.write("Error: Cannot instanciate the vector database!")
@@ -90,7 +78,7 @@ def instanciate_ai_assistant_chain(model, temperature):
 
     vector_retriever.search_type = "similarity"
     vector_retriever.search_kwargs["k"] = VECTORDB_MAX_RESULTS
-    keyword_retriever = BM25Retriever.from_texts(documents, preprocess_func=tokenize)
+    keyword_retriever = BM25Retriever.from_texts(texts=documents, metadatas=metadata, preprocess_func=tokenize)
     keyword_retriever.k = BM25_MAX_RESULTS
 
     ensemble_retriever = EnsembleRetriever(retrievers=[keyword_retriever, vector_retriever], weights=[0.4, 0.6])
