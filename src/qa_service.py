@@ -36,8 +36,7 @@ def instanciate_ai_assistant_chain(model, temperature):
     try:
         if model == "Vietnamese / Vistral":
             llm = CTransformers(model="models/llms/ggml-llms-7B-chat-q8.gguf", model_type="mistral",
-                                config={'max_new_tokens': 1000, 'context_length': 4000, 'repetition_penalty': 1.1,
-                                        "gpu_layers": 50, 'stream': True})
+                                config=LLM_CONFIG)
         elif model == "Google / Gemini 1.5":
             llm = ChatGoogleGenerativeAI(model=GEMINI_MODEL, temperature=temperature, max_output_tokens=1000,
                                          stream=True)

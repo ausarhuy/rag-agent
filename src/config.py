@@ -7,17 +7,8 @@ CHUNK_OVERLAP = 50
 EMBEDDING_MODEL = "models/vietnamese-embedding"
 
 GEMINI_MODEL = "gemini-1.5-flash"
-GGUF_MODEL = "models/llms/ggml-llms-7B-chat-q8.gguf"
+GGUF_MODEL = "models/llms/ggml-vistral-7B-chat-q8.gguf"
 
-LLM_CONFIG = {
-    "context_length": "4096",
-    "max_new_tokens": "512",
-    "gpu_layers": 50,
-    "temperature": 0.5,
-    "repetition_penalty": 1.4,
-    "reset": False,
-    "stream": True
-}
 
 GEMINI_MENU = "Google / Gemini 1.5"
 VISTRAL_MENU = "Vietnamese / Vistral"
@@ -25,6 +16,15 @@ VISTRAL_MENU = "Vietnamese / Vistral"
 DEFAULT_MODEL = GEMINI_MENU
 DEFAULT_MENU_CHOICE = 0
 DEFAULT_TEMPERATURE = 0.2
+
+LLM_CONFIG = {
+    "context_length": "8000",
+    "max_new_tokens": "512",
+    "temperature": DEFAULT_TEMPERATURE,
+    "repetition_penalty": 1.4,
+    "reset": False,
+    "stream": True
+}
 
 COLLECTION_NAME = "tdtu"  # Name of the collection in the vector DB
 DOCSTORE_PATH = "./docstore"

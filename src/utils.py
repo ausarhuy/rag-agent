@@ -3,11 +3,10 @@ Miscellaneous functions, including function to chunk and embed files.
 """
 
 import shutil
-from itertools import islice
-import streamlit as st
-from langchain_core.chat_history import BaseChatMessageHistory
-from langchain_community.chat_message_histories import ChatMessageHistory
 
+import streamlit as st
+from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_core.chat_history import BaseChatMessageHistory
 
 store = {}
 
@@ -34,18 +33,3 @@ def delete_directory(dir_path):
         print(f"Error: Permission denied to delete '{dir_path}'")
     except Exception as e:
         print(f"Error: {e}")
-
-
-def chunk_generator(chunks, size=100):
-    """
-    Generates smaller chunk of the given chunks.
-
-    Args:
-        chunks (list): The input list.
-        size (int, optional): Size of each chunk. Defaults to 100.
-
-    Yields:
-        generator: A chunk of the input chunks.
-    """
-    it = iter(chunks)
-    return iter(lambda: tuple(islice(it, size)), ())
