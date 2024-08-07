@@ -10,7 +10,7 @@ from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from src.config import CHUNK_SIZE, CHUNK_OVERLAP, COLLECTION_NAME, DOCSTORE_PATH
+from src.config import CHUNK_SIZE, CHUNK_OVERLAP, COLLECTION_NAME, DOCSTORE_PATH, CHROMA_PATH
 from src.embeddings import embedding_function
 from src.file_reader import FileReader
 
@@ -20,7 +20,7 @@ class Ingestion:
         self.text_vectorstore = Chroma(
             collection_name=COLLECTION_NAME,
             embedding_function=embedding_function,
-            persist_directory="./chromadb",
+            persist_directory=CHROMA_PATH,
         )
         self.child_text_splitter = RecursiveCharacterTextSplitter(separators="\n",
                                                                   chunk_size=CHUNK_SIZE,

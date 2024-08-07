@@ -7,7 +7,7 @@ CHUNK_OVERLAP = 50
 EMBEDDING_MODEL = "models/vietnamese-embedding"
 
 GEMINI_MODEL = "gemini-1.5-flash"
-GGUF_MODEL = "models/llms/ggml-vistral-7B-chat-q8.gguf"
+GGUF_MODEL = "models/llms/ggml-vistral-7B-chat-q4_1.gguf"
 
 
 GEMINI_MENU = "Google / Gemini 1.5"
@@ -28,6 +28,8 @@ LLM_CONFIG = {
 
 COLLECTION_NAME = "tdtu"  # Name of the collection in the vector DB
 DOCSTORE_PATH = "./docstore"
+CHROMA_PATH = "./chromadb"
+DATA_PATH = "./data"
 
 VECTORDB_MAX_RESULTS = 10
 BM25_MAX_RESULTS = 10
@@ -65,7 +67,7 @@ LOGO_PATH = "./images/tdtu_logo.png"
 ASSISTANT_ICON = "👑"
 ASSISTANT_NAME = "TDTU Chatbot"
 
-HELLO_MESSAGE = "Hello! Xin chào! 👋"
+HELLO_MESSAGE = "Xin chào 👋"
 NEW_CHAT_MESSAGE = "Cuộc trò chuyện mới"
 USER_PROMPT = "Nhập câu hỏi"
 

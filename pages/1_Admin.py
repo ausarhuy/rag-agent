@@ -2,6 +2,7 @@
 This subpage runs the admin web interface.
 """
 import os
+from pathlib import Path
 import subprocess
 
 import streamlit as st
@@ -30,8 +31,8 @@ def clear_memory_and_cache():
 
 
 def delete_db():
-    delete_directory("./chromadb")
-    delete_directory("./docstore")
+    delete_directory(CHROMA_PATH)
+    delete_directory(DOCSTORE_PATH)
 
 
 def restart_db():
@@ -87,17 +88,30 @@ def admin_frontend():
             model_list = [GEMINI_MENU, VISTRAL_MENU]
             st.session_state.model = st.selectbox('Model: ', model_list, DEFAULT_MENU_CHOICE)
             st.session_state.temperature = st.slider("Temperature: ", 0.0, 2.0, DEFAULT_TEMPERATURE)
-            st.caption("OpenAI: 0-2, Anthropic: 0-1")
 
         elif choice == "Embed Pages in DB":
-            # Embed data in Chroma DB
-            # Load and index
 
             st.caption('Embed all data in the Chroma vector DB.')
-            st.caption('Caution: Works only with files and DB running locally (server on which the app is running).')
+
+            with st.form(key="Upload document", clear_on_submit = True):
+                submit = st.form_submit_button(label='Upload document')
+
+                uploaded_file = st.file_uploader("Choose a file (JSON or PDF)", type=['json', 'pdf'])
+
+                # this code block not working
+                if submit and uploaded_file is not None:
+
+                    save_path = Path(DATA_PATH, uploaded_file.name.split(".")[-1], uploaded_file.name)
+
+                    with open(save_path, mode='wb') as w:
+                        w.write(uploaded_file.getvalue())
+
+                    if save_path.exists():
+                        st.success(f'File {uploaded_file.name} is successfully saved!')
+                clear_memory_and_cache()
 
             if st.button("Start Data Embed (locally only)"):
-                ingestion.ingest_json(file="data/extracted_data.json")
+                ingestion.ingest_json(file="data/json/tdtu_regulation_data.json")
                 clear_memory_and_cache()
                 st.write("Done!")
 

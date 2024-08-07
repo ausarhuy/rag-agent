@@ -35,7 +35,7 @@ def instanciate_ai_assistant_chain(model, temperature):
 
     try:
         if model == "Vietnamese / Vistral":
-            llm = CTransformers(model="models/llms/ggml-llms-7B-chat-q8.gguf", model_type="mistral",
+            llm = CTransformers(model=GGUF_MODEL, model_type="mistral",
                                 config=LLM_CONFIG)
         elif model == "Google / Gemini 1.5":
             llm = ChatGoogleGenerativeAI(model=GEMINI_MODEL, temperature=temperature, max_output_tokens=1000,
@@ -52,7 +52,7 @@ def instanciate_ai_assistant_chain(model, temperature):
 
     try:
         vectorstore = Chroma(embedding_function=embedding_function, collection_name=COLLECTION_NAME,
-                           persist_directory="./chromadb")
+                             persist_directory=CHROMA_PATH)
 
         docs = vectorstore.get()
         documents = docs["documents"]
@@ -62,9 +62,13 @@ def instanciate_ai_assistant_chain(model, temperature):
         st.write("Error: Cannot instanciate the vector database!")
         st.write(f"Error: {e}")
 
+    if not documents:
+        st.write("Error: There is no documents available!")
+        quit()
+
     # Instanciate the retrievers
 
-    fs = LocalFileStore("./docstore")
+    fs = LocalFileStore(DOCSTORE_PATH)
     docstore = create_kv_docstore(fs)
 
     child_text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
