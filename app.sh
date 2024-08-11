@@ -1,7 +1,4 @@
 #!/bin/bash
-
-
-
 # Define the application name
 SERVICE_NAME="Assistant"
 
