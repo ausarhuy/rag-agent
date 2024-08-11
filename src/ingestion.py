@@ -39,12 +39,12 @@ class Ingestion:
 
     def ingest_pdf(self, file: str):
         """Ingest a PDF file."""
-        docs = FileReader.load_pdf(file_path=file)
+        docs = FileReader.load_pdf(file=file)
         self._ingest_documents(docs)
 
     def ingest_json(self, file: str):
         """Ingest a JSON file."""
-        docs = FileReader.load_json(file)
+        docs = FileReader.load_json(file=file)
         self._ingest_documents(docs)
 
 

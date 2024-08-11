@@ -2,8 +2,8 @@
 This subpage runs the admin web interface.
 """
 import os
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 import streamlit as st
 from langchain.memory import ConversationBufferWindowMemory
@@ -79,8 +79,7 @@ def admin_frontend():
         # Side bar window: second page (Admin)  #
         # # # # # # # # # # # # # # # # # # # # #
 
-        options = ['Model and Temperature', 'Embed Pages in DB',
-                   'Clear Memory and Streamlit Cache']
+        options = ['Model and Temperature', 'Embed Pages in DB', 'Clear Memory and Streamlit Cache']
         choice = st.sidebar.radio("Make your choice: ", options)
 
         if choice == "Model and Temperature":
@@ -93,7 +92,7 @@ def admin_frontend():
 
             st.caption('Embed all data in the Chroma vector DB.')
 
-            with st.form(key="Upload document", clear_on_submit = True):
+            with st.form(key="Upload document", clear_on_submit=True):
                 submit = st.form_submit_button(label='Upload document')
 
                 uploaded_file = st.file_uploader("Choose a file (JSON or PDF)", type=['json', 'pdf'])
@@ -110,12 +109,24 @@ def admin_frontend():
                         st.success(f'File {uploaded_file.name} is successfully saved!')
                 clear_memory_and_cache()
 
-            if st.button("Start Data Embed (locally only)"):
-                ingestion.ingest_json(file="data/json/tdtu_regulation_data.json")
-                clear_memory_and_cache()
-                st.write("Done!")
+            # List files in the specified directory
+            files = [str(f) for f in Path(DATA_PATH).glob("**/*") if f.is_file()]
 
-            if st.button("Delete DB (locally only)"):
+            if files:
+                selected_file = st.selectbox("Select a file to embed:", files)
+
+                if st.button("Start Embedding Document"):
+                    try:
+                        if selected_file.endswith(".json"):
+                            ingestion.ingest_json(file=selected_file)
+                        elif selected_file.endswith(".pdf"):
+                            ingestion.ingest_pdf(file=selected_file)
+                        clear_memory_and_cache()
+                        st.success("Embed document successfully!")
+                    except Exception as e:
+                        st.error(f"Error: {e}")
+
+            if st.button("Delete DB"):
                 delete_db()
                 restart_db()
                 clear_memory_and_cache()
